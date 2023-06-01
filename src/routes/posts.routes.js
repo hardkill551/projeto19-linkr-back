@@ -7,7 +7,9 @@ import { validateAuth } from "../middlewares/auth.middleware.js";
 const postsRouter = Router();
 
 postsRouter.get("/posts", getPosts);
-postsRouter.post("/posts", validateAuth, validateSchema(postSchema), createPost);
+//postsRouter.post("/posts", validateAuth, validateSchema(postSchema), createPost);
 postsRouter.get("/posts/:id", getUserPost);
+
+postsRouter.post("/posts", createPost);
 
 export default postsRouter;

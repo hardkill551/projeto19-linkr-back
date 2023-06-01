@@ -1,4 +1,4 @@
-import { createPostDB, getAllPostsDB } from "../repositories/posts.repository.js";
+import { createPostDB, getAllPostsDB, getUserPostDB } from "../repositories/posts.repository.js";
 import urlMetadata from "url-metadata";
 
 export async function getPosts(req, res) {
@@ -50,7 +50,7 @@ export async function createPost(req, res) {
 export async function getUserPost(req, res){
     const { id } = req.params;
     try{
-        const post = await getUserPost(id);
+        const post = await getUserPostDB(id);
         res.send(post.rows);
     }catch (err) {
         res.status(500).send(err.message);
