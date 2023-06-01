@@ -1,10 +1,10 @@
-import { getAllPosts } from "../repositories/posts.repository.js";
+import { createPostDB, getAllPostsDB } from "../repositories/posts.repository.js";
 import urlMetadata from "url-metadata";
 
 export async function getPosts(req, res) {
     try {
         const postData = [];
-        const posts = await getAllPosts();
+        const posts = await getAllPostsDB();
 
         for (const post of posts.rows) {
             const id = post.id;
@@ -30,6 +30,19 @@ export async function getPosts(req, res) {
 
         res.send(postData);
     } catch (err) {
+        res.status(500).send(err.message);
+    }
+}
+
+export async function createPost(req, res) {
+    const { link, message } = req.body;
+    const { userId } = res.locals
+
+    try {
+        await createPostDB(link, message, userId);
+        res.sendStatus(201);
+    }
+    catch (err) {
         res.status(500).send(err.message);
     }
 }
