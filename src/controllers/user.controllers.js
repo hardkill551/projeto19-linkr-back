@@ -45,3 +45,7 @@ export async function signUp(req, res) {
       res.status(500).send(err);
     }
   }
+
+  export async function confirmSession(req, res) {
+      res.status(200).send("usuario já logado!");
+  }
