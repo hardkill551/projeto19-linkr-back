@@ -1,4 +1,4 @@
-import { getUserDB, getUserRepository, insertUser } from "../repositories/user.repository.js";
+import { getUserDB, getUserRepository, getUserRepositoryById, insertUser } from "../repositories/user.repository.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { insertSession } from "../repositories/sessions.repository.js";
@@ -34,18 +34,27 @@ export async function signUp(req, res) {
     
     try {
       const user = await getUserRepository(email);
+      console.log(user.rows)
       if(user.rowCount !== 1 ) return res.status(401).send("Informações incorretas")
       const valid = bcrypt.compareSync(password, user.rows[0].password);
       if (!valid) return res.status(401).send("Informações incorretas");
       const secretKey = process.env.SECRET_KEY;
       const token = jwt.sign(user.rows[0].id, secretKey);
       await insertSession(token, user.rows[0].id)
-      res.status(200).send({ token: token });
+      res.status(200).send({ name:user.rows[0].name, email:user.rows[0].email, picture:user.rows[0].picture, token: token });
     } catch (err) {
       res.status(500).send(err);
     }
   }
 
   export async function confirmSession(req, res) {
-      res.status(200).send("usuario já logado!");
+    try {
+        res.locals.userId = user
+        console.log(user)
+        const user = await getUserRepositoryById(id);
+        res.status(200).send(res.status(200).send({ name:user.rows[0].name, email:user.rows[0].email, picture:user.rows[0].picture, token: token }))
+    } catch (error) {
+        res.status(500).send(err);
+    }
+        
   }
