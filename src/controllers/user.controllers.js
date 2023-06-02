@@ -34,27 +34,25 @@ export async function signUp(req, res) {
     
     try {
       const user = await getUserRepository(email);
-      console.log(user.rows)
       if(user.rowCount !== 1 ) return res.status(401).send("Informações incorretas")
       const valid = bcrypt.compareSync(password, user.rows[0].password);
       if (!valid) return res.status(401).send("Informações incorretas");
+      
       const secretKey = process.env.SECRET_KEY;
       const token = jwt.sign(user.rows[0].id, secretKey);
       await insertSession(token, user.rows[0].id)
       res.status(200).send({ name:user.rows[0].name, email:user.rows[0].email, picture:user.rows[0].picture, token: token });
     } catch (err) {
-      res.status(500).send(err);
+      res.status(500).send(err.message);
     }
   }
 
   export async function confirmSession(req, res) {
     try {
-        res.locals.userId = user
-        console.log(user)
-        const user = await getUserRepositoryById(id);
-        res.status(200).send(res.status(200).send({ name:user.rows[0].name, email:user.rows[0].email, picture:user.rows[0].picture, token: token }))
+        const newUser = await getUserRepositoryById(res.locals.userId);
+        res.status(200).send({ name:newUser.rows[0].name, email:newUser.rows[0].email, picture:newUser.rows[0].picture, token:res.locals.token })
     } catch (error) {
-        res.status(500).send(err);
+        res.status(500).send(error.message);
     }
         
   }
