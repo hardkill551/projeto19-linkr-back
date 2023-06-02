@@ -7,9 +7,7 @@ import { validateToken } from "../middlewares/auth.middleware.js";
 const postsRouter = Router();
 
 postsRouter.get("/posts", getPosts);
-//postsRouter.post("/posts", validateToken, validateSchema(postSchema), createPost);
+postsRouter.post("/posts", validateToken, validateSchema(postSchema), createPost);
 postsRouter.get("/posts/:id", getUserPost);
-
-postsRouter.post("/posts", createPost);
 
 export default postsRouter;
