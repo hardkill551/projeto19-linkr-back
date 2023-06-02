@@ -67,9 +67,39 @@ export async function createPost(req, res) {
 export async function getUserPost(req, res) {
     const { id } = req.params;
     try {
-        const post = await getUserPostDB(id);
-        res.send(post.rows);
+      const result = await getUserPostDB(id);
+  
+      if (result.rows.length === 0 || result.rows[0].id === null) {
+        const response = {
+          name: result.rows[0].name,
+          picture: result.rows[0].picture,
+          postsUser: []
+        };
+        return res.send(response);
+      }
+  
+      const formattedResult = result.rows.map(item => {
+        return {
+          name: item.name,
+          picture: item.picture,
+          postUser: {
+            id: item.id,
+            link: item.link,
+            message: item.message,
+            userId: item.userId,
+            picture: item.picture
+          }
+        };
+      });
+  
+      const response = {
+        name: formattedResult[0].name,
+        picture: formattedResult[0].picture,
+        postsUser: formattedResult.map(item => item.postUser)
+      };
+  
+      res.send(response);
     } catch (err) {
-        res.status(500).send(err.message);
+      res.status(500).send(err.message);
     }
-}
+  }
