@@ -28,3 +28,12 @@ export function createHashtagDB(hashtag) {
 export function createPostHashtagDB(postId, hashtagId) {
     return db.query(`INSERT INTO "postHashtag" ("postId", "hashtagId") VALUES ($1, $2);`, [postId, hashtagId]);
 }
+
+export function getUserPostDB(id) {
+    return db.query(`SELECT 
+    posts.*, users.name, users.picture
+    FROM posts 
+    JOIN users ON users.id = posts."userId"
+    WHERE users.id = $1
+    ORDER BY id desc LIMIT 20;`, [id])
+}
