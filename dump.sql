@@ -2,8 +2,10 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 12.15 (Ubuntu 12.15-0ubuntu0.20.04.1)
--- Dumped by pg_dump version 12.15 (Ubuntu 12.15-0ubuntu0.20.04.1)
+
+-- Dumped from database version 14.8 (Ubuntu 14.8-0ubuntu0.22.04.1)
+-- Dumped by pg_dump version 14.8 (Ubuntu 14.8-0ubuntu0.22.04.1)
+
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -281,13 +283,9 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 -- Data for Name: sessions; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-
-
 --
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: -
 --
-
-
 
 --
 -- Name: hashtag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
@@ -321,14 +319,16 @@ SELECT pg_catalog.setval('public.posts_id_seq', 1, false);
 -- Name: sessions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.sessions_id_seq', 1, false);
+
+SELECT pg_catalog.setval('public.sessions_id_seq', 17, true);
 
 
 --
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.users_id_seq', 1, false);
+
+SELECT pg_catalog.setval('public.users_id_seq', 1, true);
 
 
 --
