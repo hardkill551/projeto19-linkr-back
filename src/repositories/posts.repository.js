@@ -2,10 +2,16 @@ import { db } from "../database/database.connection.js";
 
 export function getAllPostsDB() {
     return db.query(`SELECT 
-    posts.*, users.name, users.picture
-    FROM posts 
-    JOIN users ON users.id = posts."userId"
-    ORDER BY id desc LIMIT 20;`);
+    posts.*,
+    users.name,
+    users.picture,
+    COUNT(likes.id) AS like_count
+FROM posts 
+JOIN users ON users.id = posts."userId"
+LEFT JOIN likes ON likes."postId" = posts.id
+GROUP BY posts.id, users.name, users.picture
+ORDER BY posts.id DESC
+LIMIT 20;`);
 }
 
 export function createPostDB(link, message, userId, linkTitle, linkImage, linkDescription) {

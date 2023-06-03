@@ -4,7 +4,6 @@ import urlMetadata from "url-metadata";
 export async function getPosts(req, res) {
     try {
         const posts = await getAllPostsDB();
-
         res.send(posts.rows);
     } catch (err) {
         res.status(500).send(err.message);
