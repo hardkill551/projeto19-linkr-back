@@ -1,4 +1,4 @@
-import { deleteLikes, postLike, sameUser } from "../repositories/likes.repository.js";
+import { deleteLikes, postLike, sameUser, whoLikeDB } from "../repositories/likes.repository.js";
 
 export async function postLikes(req, res) {
     const {postId} = req.body
@@ -39,3 +39,12 @@ export async function checkPost(req, res) {
     }
 }
 
+export async function whoLike(req, res){
+    const {id} = req.params;
+    try{
+        const peopleWhoLike = await whoLikeDB(id);
+        res.send(peopleWhoLike.rows)
+    }catch (err) {
+        res.status(500).send(err.message);
+    }
+}

@@ -38,6 +38,7 @@ export function createPostHashtagDB(postId, hashtagId) {
 export function getUserPostDB(id){
     return db.query(
         `SELECT posts.*, users.name, users.picture
+        COUNT(likes.id) AS like_count
         FROM users
         LEFT JOIN posts ON users.id = posts."userId"
         WHERE users.id = $1
