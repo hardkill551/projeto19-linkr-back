@@ -35,46 +35,16 @@ export function createPostHashtagDB(postId, hashtagId) {
     return db.query(`INSERT INTO "postHashtag" ("postId", "hashtagId") VALUES ($1, $2);`, [postId, hashtagId]);
 }
 
-export function getUserPostDB(id) {
+export function getUserPostDB(id){
     return db.query(
-      `SELECT posts.*, users.name, users.picture,
-      COUNT(likes.id) AS like_count,
-      ARRAY(
-          SELECT u.name
-          FROM likes l
-          JOIN users u ON l."userId" = u.id
-          WHERE l."postId" = posts.id
-      ) AS liked_by
-    FROM users
-    LEFT JOIN posts ON users.id = posts."userId"
-    LEFT JOIN likes ON posts.id = likes."postId"
-    WHERE users.id = $1
-    GROUP BY posts.id, users.id
-    ORDER BY posts.id DESC
-    LIMIT 20;
-  
-  `,
-      [id]
-    );
-  }
-  
-  export async function deletePostDB(postId) {
-
-    await db.query(`
-    DELETE FROM posts WHERE id = $1;
-  `, [postId]);
-   await db.query(`DEELETE FROM postHashtag WHERE postId = $1`, [postId]);
-
-    await db.query(`DELETE FROM likes WHERE postId = $1`, [postId]);
-    
+        `SELECT posts.*, users.name, users.picture
+        COUNT(likes.id) AS like_count
+        FROM users
+        LEFT JOIN posts ON users.id = posts."userId"
+        WHERE users.id = $1
+        ORDER BY posts.id DESC
+        LIMIT 20;`,
+        [id]
+      );
 }
 
-export function updatePostDB(link , message, postId) {
-    
-
-    return db.query(`
-    UPDATE posts SET link = $1 , message = $2
-    WHERE id = $3 
-    
-    `,[link, message ,postId] )}
-  
