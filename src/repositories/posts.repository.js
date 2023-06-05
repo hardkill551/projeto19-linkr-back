@@ -46,5 +46,5 @@ export function getUserPostDB(id){
         LIMIT 20;`,
         [id]
       );
-
 }
+

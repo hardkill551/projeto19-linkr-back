@@ -1,4 +1,5 @@
-import { createPostDB, createPostHashtagDB, getAllPostsDB, getUserPostDB, getIdHashtag, createHashtagDB } from "../repositories/posts.repository.js";
+
+import { createPostDB, createPostHashtagDB, getAllPostsDB, getUserPostDB, getIdHashtag, createHashtagDB,deletePostDB,updatePostDB } from "../repositories/posts.repository.js";
 import urlMetadata from "url-metadata";
 
 export async function getPosts(req, res) {
@@ -63,6 +64,33 @@ export async function createPost(req, res) {
     }
 }
 
+export async function deletePost(req, res) {
+    const { postID } = req.params;
+    
+  
+    try {
+        await deletePostDB(postID)
+  
+      res.sendStatus(204); 
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send(error.message);
+    }
+}  
+
+export async function updatePost(req, res) {
+    const { link, message } = req.body;
+    const { userId } = res.locals
+
+    try {
+        await updatePostDB(link, message, userId);
+        res.sendStatus(201);
+    }
+    catch (err) {
+        res.status(500).send(err.message);
+    }
+
+}
 export async function getUserPost(req, res) {
     const { id } = req.params;
     try {
@@ -76,6 +104,7 @@ export async function getUserPost(req, res) {
         };
         return res.send(response);
       }
+      console.log(result.rows)
       const formattedResult = result.rows.map(item => {
         return {
           name: item.name,
@@ -89,7 +118,8 @@ export async function getUserPost(req, res) {
             like_count: item.like_count,
             linkDescription: item.linkDescription,
             linkImage: item.linkImage,
-            linkTitle: item.linkTitle
+            linkTitle: item.linkTitle,
+            liked_by: item.liked_by
           }
         };
       });
