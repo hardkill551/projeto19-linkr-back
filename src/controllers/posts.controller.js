@@ -76,7 +76,6 @@ export async function getUserPost(req, res) {
         };
         return res.send(response);
       }
-  
       const formattedResult = result.rows.map(item => {
         return {
           name: item.name,
@@ -87,7 +86,10 @@ export async function getUserPost(req, res) {
             message: item.message,
             userId: item.userId,
             picture: item.picture,
-            like_count: item.like_count
+            like_count: item.like_count,
+            linkDescription: item.linkDescription,
+            linkImage: item.linkImage,
+            linkTitle: item.linkTitle
           }
         };
       });
