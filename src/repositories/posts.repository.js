@@ -35,21 +35,16 @@ export function createPostHashtagDB(postId, hashtagId) {
     return db.query(`INSERT INTO "postHashtag" ("postId", "hashtagId") VALUES ($1, $2);`, [postId, hashtagId]);
 }
 
-export function getUserPostDB(id) {
+export function getUserPostDB(id){
     return db.query(
-      `SELECT posts.*, users.name, users.picture,
+        `SELECT posts.*, users.name, users.picture
         COUNT(likes.id) AS like_count
         FROM users
         LEFT JOIN posts ON users.id = posts."userId"
-        LEFT JOIN likes ON posts.id = likes."postId"
         WHERE users.id = $1
-        GROUP BY posts.id, users.id
         ORDER BY posts.id DESC
         LIMIT 20;`,
-      [id]
-    );
-  }
-  
-  
+        [id]
+      );
 
-  
+}
