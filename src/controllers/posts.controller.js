@@ -86,7 +86,8 @@ export async function getUserPost(req, res) {
             link: item.link,
             message: item.message,
             userId: item.userId,
-            picture: item.picture
+            picture: item.picture,
+            like_count: item.like_count
           }
         };
       });
