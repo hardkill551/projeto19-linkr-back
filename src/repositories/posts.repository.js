@@ -38,14 +38,22 @@ export function createPostHashtagDB(postId, hashtagId) {
 export function getUserPostDB(id) {
     return db.query(
       `SELECT posts.*, users.name, users.picture,
-        COUNT(likes.id) AS like_count
-        FROM users
-        LEFT JOIN posts ON users.id = posts."userId"
-        LEFT JOIN likes ON posts.id = likes."postId"
-        WHERE users.id = $1
-        GROUP BY posts.id, users.id
-        ORDER BY posts.id DESC
-        LIMIT 20;`,
+      COUNT(likes.id) AS like_count,
+      ARRAY(
+          SELECT u.name
+          FROM likes l
+          JOIN users u ON l."userId" = u.id
+          WHERE l."postId" = posts.id
+      ) AS liked_by
+    FROM users
+    LEFT JOIN posts ON users.id = posts."userId"
+    LEFT JOIN likes ON posts.id = likes."postId"
+    WHERE users.id = $1
+    GROUP BY posts.id, users.id
+    ORDER BY posts.id DESC
+    LIMIT 20;
+  
+  `,
       [id]
     );
   }
