@@ -1,4 +1,4 @@
-import { getTags, getPostsByTag } from "../repositories/tagRepository.js";
+import { getTags, getPostsByTag } from "../repositories/hashtag.repository.js";
 
 export async function getTrending(req, res) {
   try {
