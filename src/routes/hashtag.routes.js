@@ -1,9 +1,9 @@
 import { Router } from "express";
 import { getTrending, getTaggedPosts} from "../controllers/hashtag.controller.js";
 
-const TagRoutes = Router();
+const tagRoutes = Router();
 
-TagRoutes.get("/trending", getTrending);
-TagRoutes.get("/hashtag/:id", getTaggedPosts);
+tagRoutes.get("/trending", getTrending);
+tagRoutes.get("/hashtag/:id", getTaggedPosts);
 
-export default TagRoutes;
+export default tagRoutes;
