@@ -1,5 +1,5 @@
 
-import { createPostDB, createPostHashtagDB, getAllPostsDB, getUserPostDB, getIdHashtag, createHashtagDB,deletePostDB,updatePostDB } from "../repositories/posts.repository.js";
+import { createPostDB, createPostHashtagDB, getAllPostsDB, getUserPostDB, getIdHashtag, createHashtagDB } from "../repositories/posts.repository.js";
 import urlMetadata from "url-metadata";
 
 export async function getPosts(req, res) {
