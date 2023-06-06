@@ -43,7 +43,7 @@ export function createPostHashtagDB(postId, hashtagId) {
 
 export function getUserPostDB(id) {
     return db.query(
-      `SELECT posts.*, users.name, users.picture,
+        `SELECT posts.*, users.name, users.picture,
       COUNT(likes.id) AS like_count,
       ARRAY(
           SELECT u.name
@@ -60,10 +60,6 @@ export function getUserPostDB(id) {
     LIMIT 20;
   
   `,
-      [id]
+        [id]
     );
-  }
-  
-  
-
-  
+}
