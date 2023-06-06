@@ -1,14 +1,33 @@
 import { db } from "../database/database.connection.js";
 
-export async function getTags() {
+export async function getHashtags() {
   return db.query(
-    `SELECT "hashtag" FROM "hashtags" ORDER BY  DESC LIMIT 10;`
+    `SELECT COUNT("postHashtag"."hashtagId") as "hashtagCount", hashtag.hashtag
+      FROM "postHashtag"
+      JOIN hashtag ON "postHashtag"."hashtagId" = hashtag.id
+      GROUP BY hashtag.hashtag
+      ORDER BY "hashtagCount" DESC
+      LIMIT 10;`
   );
 }
 
-export async function getPostsByTag(tagId) {
+export async function getPostsByHashtagDB(hashtag) {
   return db.query(
-    `SELECT * FROM "posts" JOIN "hashtags"."hashtag" ON "hashtags"."id" = "posts"."tagId" WHERE "posts"."tagId" = $1 ORDER BY "posts"."id" DESC;`,
-    [tagId]
+    `SELECT 
+    posts.*,
+    users.name,
+    users.picture,
+    hashtag.hashtag,
+    COUNT(likes.id) AS like_count	
+    FROM posts 
+    JOIN users ON users.id = posts."userId"
+    JOIN "postHashtag" ON posts.id = "postHashtag"."postId"
+    JOIN hashtag ON hashtag.id = "postHashtag"."hashtagId"
+    LEFT JOIN likes ON likes."postId" = posts.id
+    WHERE hashtag.hashtag = $1
+    GROUP BY posts.id, users.name, users.picture, hashtag.hashtag
+    ORDER BY posts.id DESC
+    LIMIT 20;`,
+    [hashtag]
   );
 }

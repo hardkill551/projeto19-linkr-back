@@ -1,9 +1,10 @@
 import { Router } from "express";
-import { getTrending, getTaggedPosts} from "../controllers/hashtag.controller.js";
+import { getTrending, getPostsByHashtag } from "../controllers/hashtag.controller.js";
+import { validateToken } from "../middlewares/auth.middleware.js";
 
-const tagRoutes = Router();
+const tagRouter = Router();
 
-tagRoutes.get("/trending", getTrending);
-tagRoutes.get("/hashtag/:id", getTaggedPosts);
+tagRouter.get("/trending", validateToken, getTrending);
+tagRouter.get("/hashtag/:hashtag", validateToken, getPostsByHashtag);
 
-export default tagRoutes;
+export default tagRouter;

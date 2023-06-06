@@ -6,12 +6,12 @@ export function getAllPostsDB() {
     users.name,
     users.picture,
     COUNT(likes.id) AS like_count
-FROM posts 
-JOIN users ON users.id = posts."userId"
-LEFT JOIN likes ON likes."postId" = posts.id
-GROUP BY posts.id, users.name, users.picture
-ORDER BY posts.id DESC
-LIMIT 20;`);
+    FROM posts 
+    JOIN users ON users.id = posts."userId"
+    LEFT JOIN likes ON likes."postId" = posts.id
+    GROUP BY posts.id, users.name, users.picture
+    ORDER BY posts.id DESC
+    LIMIT 20;`);
 }
 
 export function createPostDB(link, message, userId, linkTitle, linkImage, linkDescription) {
@@ -37,7 +37,7 @@ export function createPostHashtagDB(postId, hashtagId) {
 
 export function getUserPostDB(id) {
     return db.query(
-      `SELECT posts.*, users.name, users.picture,
+        `SELECT posts.*, users.name, users.picture,
       COUNT(likes.id) AS like_count,
       ARRAY(
           SELECT u.name
@@ -54,6 +54,6 @@ export function getUserPostDB(id) {
     LIMIT 20;
   
   `,
-      [id]
+        [id]
     );
-  }
+}
