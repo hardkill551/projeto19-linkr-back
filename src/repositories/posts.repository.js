@@ -5,7 +5,13 @@ export function getAllPostsDB() {
     posts.*,
     users.name,
     users.picture,
-    COUNT(likes.id) AS like_count
+    COUNT(likes.id) AS like_count,
+    ARRAY(
+        SELECT u.name
+        FROM likes l
+        JOIN users u ON l."userId" = u.id
+        WHERE l."postId" = posts.id
+    ) AS liked_by
     FROM posts 
     JOIN users ON users.id = posts."userId"
     LEFT JOIN likes ON likes."postId" = posts.id
