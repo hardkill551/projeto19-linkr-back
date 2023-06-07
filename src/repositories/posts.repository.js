@@ -1,6 +1,6 @@
 import { db } from "../database/database.connection.js";
 
-export function getAllPostsDB() {
+export function getAllPostsDB(stalkerId) {
     return db.query(`SELECT 
     posts.*,
     users.name,
@@ -12,7 +12,7 @@ export function getAllPostsDB() {
         JOIN users u ON l."userId" = u.id
         WHERE l."postId" = posts.id
     ) AS liked_by,
-	COUNT(DISTINCT comments.id) AS "commentsCount",
+    COUNT(DISTINCT comments.id) AS "commentsCount",
      (
         SELECT json_agg(json_build_object('comment', c.comment, 'commentAuthor', u.name, 'pictureAuthor', u.picture))
         FROM comments c
@@ -23,9 +23,15 @@ export function getAllPostsDB() {
     JOIN users ON users.id = posts."userId"
 	LEFT JOIN comments ON comments."postId" = posts.id
     LEFT JOIN likes ON likes."postId" = posts.id
+    WHERE 
+        posts."userId" IN (
+            SELECT "followedId"
+            FROM following
+            WHERE stalker = $1
+        )
     GROUP BY posts.id, users.name, users.picture
     ORDER BY posts.id DESC
-    LIMIT 20;`);
+    LIMIT 20;`,[stalkerId]);
 }
 
 export function createPostDB(link, message, userId, linkTitle, linkImage, linkDescription) {

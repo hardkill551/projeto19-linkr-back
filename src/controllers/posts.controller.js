@@ -3,9 +3,12 @@ import urlMetadata from "url-metadata";
 
 export async function getPosts(req, res) {
   try {
-    const posts = await getAllPostsDB();
+    const { userId } = res.locals;
+    
+    const posts = await getAllPostsDB(userId);
     res.send(posts.rows);
   } catch (err) {
+    console.log(err)
     res.status(500).send(err.message);
   }
 }
