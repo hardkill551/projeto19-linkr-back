@@ -4,10 +4,12 @@ import bcrypt from "bcrypt";
 import { insertSession } from "../repositories/sessions.repository.js";
 
 export async function getUser(req, res){
+  const { userId } = res.locals;
+  
     const {letters} = req.params;
     try{
-        const users = await getUserDB(letters);
-        res.send(users.rows)
+        const result = await getUserDB(letters, userId);
+        res.send(result.rows)
     }catch (err) {
         res.status(500).send(err.message);
     }
