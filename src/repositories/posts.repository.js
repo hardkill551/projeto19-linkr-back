@@ -14,7 +14,7 @@ export function getAllPostsDB(stalkerId) {
     ) AS liked_by,
     COUNT(DISTINCT comments.id) AS "commentsCount",
      (
-        SELECT json_agg(json_build_object('comment', c.comment, 'commentAuthor', u.name, 'pictureAuthor', u.picture))
+        SELECT json_agg(json_build_object('comment', c.comment, 'commentAuthor', u.name, 'pictureAuthor', u.picture, 'commentAuthorId', u.id))
         FROM comments c
         JOIN users u ON c."userId" = u.id
         WHERE c."postId" = posts.id
@@ -31,7 +31,7 @@ export function getAllPostsDB(stalkerId) {
         )
     GROUP BY posts.id, users.name, users.picture
     ORDER BY posts.id DESC
-    LIMIT 20;`,[stalkerId]);
+    LIMIT 20;`, [stalkerId]);
 }
 
 export function createPostDB(link, message, userId, linkTitle, linkImage, linkDescription) {
@@ -67,7 +67,7 @@ export function getUserPostDB(id) {
       ) AS liked_by,
       COUNT(DISTINCT comments.id) AS "commentsCount",
        (
-          SELECT json_agg(json_build_object('comment', c.comment, 'commentAuthor', u.name, 'pictureAuthor', u.picture))
+          SELECT json_agg(json_build_object('comment', c.comment, 'commentAuthor', u.name, 'pictureAuthor', u.picture, 'commentAuthorId', u.id))
           FROM comments c
           JOIN users u ON c."userId" = u.id
           WHERE c."postId" = posts.id
