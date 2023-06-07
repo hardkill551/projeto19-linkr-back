@@ -1,12 +1,5 @@
 import { db } from "../database/database.connection.js";
 
-// export function getUserDB(letters, stalker){
-//     return db.query(`
-//         SELECT *
-//         FROM users
-//         WHERE LOWER(name) LIKE LOWER($1 || '%');    
-//     `, [letters, stalker])
-// }
 export function getUserDB(letters, stalker) {
     return db.query(`
       SELECT u.*, 
@@ -22,13 +15,6 @@ export function getUserDB(letters, stalker) {
     `, [letters, stalker]);
   }
   
-  
-  
-  
-  
-  
-  
-
 export async function getUserRepository (email) {
 	return db.query('SELECT * FROM users WHERE email = $1', [email]);
 }
