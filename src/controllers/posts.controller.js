@@ -3,9 +3,12 @@ import urlMetadata from "url-metadata";
 
 export async function getPosts(req, res) {
   try {
-    const posts = await getAllPostsDB();
+    const { userId } = res.locals;
+    
+    const posts = await getAllPostsDB(userId);
     res.send(posts.rows);
   } catch (err) {
+    console.log(err)
     res.status(500).send(err.message);
   }
 }
@@ -89,7 +92,9 @@ export async function getUserPost(req, res) {
           linkDescription: item.linkDescription,
           linkImage: item.linkImage,
           linkTitle: item.linkTitle,
-          liked_by: item.liked_by
+          liked_by: item.liked_by,
+          commentsCount: item.commentsCount,
+          commentsData: item.commentsData
         }
       };
     });
