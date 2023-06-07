@@ -7,3 +7,7 @@ export function postFollowersDB(stalker, followedId){
 export function deleteFollowersDB(stalker, followedId) {
     return db.query('DELETE FROM following WHERE stalker = $1 AND "followedId" = $2;', [stalker, followedId]);
 }
+
+export function getFollowersDB(stalker){
+    return db.query(`SELECT * FROM following WHERE stalker = $1`, [stalker])
+}
