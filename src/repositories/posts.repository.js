@@ -5,7 +5,7 @@ export function getAllPostsDB() {
     posts.*,
     users.name,
     users.picture,
-    COUNT(likes.id) AS like_count,
+    COUNT(DISTINCT likes.id) AS like_count,
     ARRAY(
         SELECT u.name
         FROM likes l
@@ -52,7 +52,7 @@ export function createPostHashtagDB(postId, hashtagId) {
 export function getUserPostDB(id) {
     return db.query(
         `SELECT posts.*, users.name, users.picture,
-      COUNT(likes.id) AS like_count,
+      COUNT(DISTINCT likes.id) AS like_count,
       ARRAY(
           SELECT u.name
           FROM likes l

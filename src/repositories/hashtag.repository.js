@@ -18,7 +18,7 @@ export async function getPostsByHashtagDB(hashtag) {
     users.name,
     users.picture,
     hashtag.hashtag,
-    COUNT(likes.id) AS like_count,
+    COUNT(DISTINCT likes.id) AS like_count,
     ARRAY(
       SELECT u.name
       FROM likes l
