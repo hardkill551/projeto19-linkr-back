@@ -21,6 +21,7 @@ export function getAllPostsDB(stalkerId) {
     ) AS "commentsData"
     FROM posts 
     JOIN users ON users.id = posts."userId"
+	LEFT JOIN comments ON comments."postId" = posts.id
     LEFT JOIN likes ON likes."postId" = posts.id
     WHERE 
         posts."userId" IN (

@@ -8,6 +8,7 @@ export async function getPosts(req, res) {
     const posts = await getAllPostsDB(userId);
     res.send(posts.rows);
   } catch (err) {
+    console.log(err)
     res.status(500).send(err.message);
   }
 }
