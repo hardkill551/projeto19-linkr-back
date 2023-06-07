@@ -6,6 +6,6 @@ import { commentSchema } from "../schemas/comments.schemas.js";
 
 const commentsRouter = Router();
 
-commentsRouter.post("/comments", validateSchema(commentSchema), createComment)
+commentsRouter.post("/comments", validateToken, validateSchema(commentSchema), createComment)
 
 export default commentsRouter;
