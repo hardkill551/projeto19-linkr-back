@@ -25,7 +25,7 @@ export async function getPostsByHashtagDB(hashtag) {
       JOIN users u ON l."userId" = u.id
       WHERE l."postId" = posts.id
   ) AS liked_by,
-	COUNT(comments.id) AS "commentsCount",
+	COUNT(DISTINCT comments.id) AS "commentsCount",
      (
         SELECT json_agg(json_build_object('comment', c.comment, 'commentAuthor', u.name, 'pictureAuthor', u.picture))
         FROM comments c
