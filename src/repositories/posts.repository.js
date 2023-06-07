@@ -58,10 +58,18 @@ export function getUserPostDB(id) {
           FROM likes l
           JOIN users u ON l."userId" = u.id
           WHERE l."postId" = posts.id
-      ) AS liked_by
+      ) AS liked_by,
+      COUNT(comments.id) AS "commentsCount",
+       (
+          SELECT json_agg(json_build_object('comment', c.comment, 'commentAuthor', u.name, 'pictureAuthor', u.picture))
+          FROM comments c
+          JOIN users u ON c."userId" = u.id
+          WHERE c."postId" = posts.id
+      ) AS "commentsData"
     FROM users
     LEFT JOIN posts ON users.id = posts."userId"
     LEFT JOIN likes ON posts.id = likes."postId"
+    LEFT JOIN comments ON comments."postId" = posts.id
     WHERE users.id = $1
     GROUP BY posts.id, users.id
     ORDER BY posts.id DESC
