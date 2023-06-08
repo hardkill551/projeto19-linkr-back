@@ -10,10 +10,8 @@ export async function validateToken(req, res, next) {
         const token = authorization?.replace("Bearer ", "")
         if (!token) return res.sendStatus(401)
         const user = jwt.verify(token, process.env.SECRET_KEY)
-        const session = await getSession(token, user)
         res.locals.userId = user
         res.locals.token = token
-        if (session.rowCount === 0) return res.sendStatus(401)
         next()
     }
     catch (err) {

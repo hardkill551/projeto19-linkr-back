@@ -48,7 +48,7 @@ export async function createPost(req, res) {
           const hashtagIdRequest = await getIdHashtag(hashtag);
 
           if (hashtagIdRequest.rowCount > 0) {
-            hashtagId = hashtagIdRepostIdquest.rows[0].id;
+            hashtagId = hashtagIdRequest.rows[0].id;
           } else {
             const hashtagCreated = await createHashtagDB(hashtag);
             hashtagId = hashtagCreated.rows[0].id;
