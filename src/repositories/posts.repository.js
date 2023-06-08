@@ -54,7 +54,11 @@ export function createHashtagDB(hashtag) {
 export function createPostHashtagDB(postId, hashtagId) {
     return db.query(`INSERT INTO "postHashtag" ("postId", "hashtagId") VALUES ($1, $2);`, [postId, hashtagId]);
 }
-
+export async function deletePostHashtagDB(postId, hashtagId) {
+    await db.query(`DELETE FROM 
+    "postHashtag" WHERE "postId" = $1`, [postId]);
+    return db.query(`INSERT INTO "postHashtag" ("postId", "hashtagId") VALUES ($1, $2);`, [postId, hashtagId]);
+}
 export function getUserPostDB(id) {
     return db.query(
         `SELECT posts.*, users.name, users.picture,
@@ -84,4 +88,20 @@ export function getUserPostDB(id) {
   `,
         [id]
     );
+}
+
+export function sameUserPost(userId, postId) {
+    return db.query(`SELECT * FROM posts WHERE id = $1 AND "userId" = $2`, [postId, userId]);
+}
+export async function deletePosts(postId) {
+    await db.query(`DELETE FROM 
+    "postHashtag" WHERE "postId" = $1`, [postId]);
+    await db.query(`DELETE FROM 
+    "likes" WHERE "postId" = $1`, [postId]);
+    return db.query(`DELETE FROM 
+    posts WHERE id = $1`, [postId]);
+}
+export function updatePosts(postId, description) {
+    return db.query(`UPDATE 
+    posts SET message = $2 WHERE id = $1`, [postId, description]);
 }
