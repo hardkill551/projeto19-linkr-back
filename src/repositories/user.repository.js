@@ -1,13 +1,20 @@
 import { db } from "../database/database.connection.js";
 
-export function getUserDB(letters){
+export function getUserDB(letters, stalker) {
     return db.query(`
-        SELECT *
-        FROM users
-        WHERE LOWER(name) LIKE LOWER($1 || '%');    
-    `, [letters])
-}
-
+      SELECT u.*, 
+        CASE WHEN f."followedId" IS NOT NULL THEN TRUE ELSE FALSE END AS is_followed
+      FROM users AS u
+      LEFT JOIN (
+        SELECT "followedId"
+        FROM following
+        WHERE stalker = $2
+      ) AS f ON f."followedId" = u.id
+      WHERE LOWER(u.name) LIKE LOWER($1 || '%')
+      ORDER BY is_followed DESC;
+    `, [letters, stalker]);
+  }
+  
 export async function getUserRepository (email) {
 	return db.query('SELECT * FROM users WHERE email = $1', [email]);
 }

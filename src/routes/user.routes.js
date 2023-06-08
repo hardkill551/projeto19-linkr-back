@@ -6,7 +6,7 @@ import { validateToken } from "../middlewares/auth.middleware.js";
 
 const userRoutes = Router()
 
-userRoutes.get("/users/:letters", getUser);
+userRoutes.get("/users/:letters",validateToken, getUser);
 userRoutes.post("/signup", validateSchema(signUpSchema), signUp)
 userRoutes.post("/signin", validateSchema(loginSchema), signIn)
 userRoutes.post("/token", validateToken, confirmSession)

@@ -1,4 +1,4 @@
-import { createPostDB, createPostHashtagDB, getAllPostsDB, getUserPostDB, getIdHashtag, createHashtagDB } from "../repositories/posts.repository.js";
+import { createPostDB, createPostHashtagDB, getAllPostsDB, getUserPostDB, getIdHashtag, createHashtagDB, sameUserPost, deletePosts, updatePosts, deletePostHashtagDB } from "../repositories/posts.repository.js";
 import urlMetadata from "url-metadata";
 
 export async function getPosts(req, res) {
@@ -108,5 +108,55 @@ export async function getUserPost(req, res) {
     res.send(response);
   } catch (err) {
     res.status(500).send(err.message);
+  }
+}
+export async function deletePost(req, res) {
+  const {postId} = req.body
+  try {
+      const userLike = await sameUserPost(res.locals.userId, postId)
+      if (userLike.rowCount === 0) return res.sendStatus(404)
+      await deletePosts(postId)
+      res.sendStatus(201);
+  } catch (err) {
+      res.status(500).send(err.message);
+  }
+}
+export async function updatePost(req, res) {
+  const {id, description} = req.body
+  try {
+    
+      const userLike = await sameUserPost(res.locals.userId, id)
+      
+      if (userLike.rowCount === 0) return res.sendStatus(404)
+      
+      await updatePosts(id, description)
+      if (description) {
+        const regex = /#(\w+)/g;
+        const hashtags = [];
+        let match;
+        while ((match = regex.exec(description))) {
+          const hashtag = match[1].toLowerCase();
+          hashtags.push(hashtag);
+        }
+  
+        if (hashtags.length > 0) {
+          let hashtagId;
+          hashtags.forEach(async hashtag => {
+            const hashtagIdRequest = await getIdHashtag(hashtag);
+  
+            if (hashtagIdRequest.rowCount > 0) {
+              hashtagId = hashtagIdRequest.rows[0].id;
+            } else {
+              const hashtagCreated = await createHashtagDB(hashtag);
+              hashtagId = hashtagCreated.rows[0].id;
+            }
+            await createPostHashtagDB(id, hashtagId);
+            await deletePostHashtagDB(id, hashtagId);
+          })
+        }
+      }
+      res.sendStatus(201);
+  } catch (err) {
+      res.status(500).send(err.message);
   }
 }

@@ -4,10 +4,12 @@ import bcrypt from "bcrypt";
 import { insertSession } from "../repositories/sessions.repository.js";
 
 export async function getUser(req, res){
+  const { userId } = res.locals;
+  
     const {letters} = req.params;
     try{
-        const users = await getUserDB(letters);
-        res.send(users.rows)
+        const result = await getUserDB(letters, userId);
+        res.send(result.rows)
     }catch (err) {
         res.status(500).send(err.message);
     }
@@ -41,7 +43,7 @@ export async function signUp(req, res) {
       const secretKey = process.env.SECRET_KEY;
       const token = jwt.sign(user.rows[0].id, secretKey);
       await insertSession(token, user.rows[0].id)
-      res.status(200).send({ name:user.rows[0].name, email:user.rows[0].email, picture:user.rows[0].picture, token: token });
+      res.status(200).send({id:user.rows[0].id, name:user.rows[0].name, email:user.rows[0].email, picture:user.rows[0].picture, token: token });
     } catch (err) {
       res.status(500).send(err.message);
     }
@@ -50,9 +52,10 @@ export async function signUp(req, res) {
   export async function confirmSession(req, res) {
     try {
         const newUser = await getUserRepositoryById(res.locals.userId);
-        res.status(200).send({ name:newUser.rows[0].name, email:newUser.rows[0].email, picture:newUser.rows[0].picture, token:res.locals.token })
+        res.status(200).send({id:newUser.rows[0].id, name:newUser.rows[0].name, email:newUser.rows[0].email, picture:newUser.rows[0].picture, token:res.locals.token })
     } catch (error) {
         res.status(500).send(error.message);
     }
         
   }
+
