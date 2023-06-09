@@ -23,12 +23,13 @@ export function getAllPostsDB(stalkerId, loadCount) {
     JOIN users ON users.id = posts."userId"
 	LEFT JOIN comments ON comments."postId" = posts.id
     LEFT JOIN likes ON likes."postId" = posts.id
-    WHERE 
+    WHERE
         posts."userId" IN (
             SELECT "followedId"
             FROM following
             WHERE stalker = $1
         )
+        OR posts."userId" = $1
     GROUP BY posts.id, users.name, users.picture
     ORDER BY posts.id DESC
     LIMIT 10
@@ -42,6 +43,8 @@ export function createPostDB(link, message, userId, linkTitle, linkImage, linkDe
     RETURNING id
     ;`, [link, message, userId, linkTitle, linkImage, linkDescription]);
 }
+
+
 
 export function getIdHashtag(hashtag) {
     return db.query(`SELECT id FROM hashtag WHERE hashtag=$1;`, [hashtag]);

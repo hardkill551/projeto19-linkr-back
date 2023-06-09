@@ -95,7 +95,9 @@ export async function getUserPost(req, res) {
           linkTitle: item.linkTitle,
           liked_by: item.liked_by,
           commentsCount: item.commentsCount,
-          commentsData: item.commentsData
+          commentsData: item.commentsData,
+          repost: item.repost,
+          repostBy: item.repostBy,
         }
       };
     });
