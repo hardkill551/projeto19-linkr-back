@@ -124,13 +124,12 @@ export async function deletePost(req, res) {
 export async function updatePost(req, res) {
   const {id, description} = req.body
   try {
-    
+    await deletePostHashtagDB(id);
       const userLike = await sameUserPost(res.locals.userId, id)
       
       if (userLike.rowCount === 0) return res.sendStatus(404)
       
       await updatePosts(id, description)
-      if (description) {
         const regex = /#(\w+)/g;
         const hashtags = [];
         let match;
@@ -141,9 +140,9 @@ export async function updatePost(req, res) {
   
         if (hashtags.length > 0) {
           let hashtagId;
+          
           hashtags.forEach(async hashtag => {
             const hashtagIdRequest = await getIdHashtag(hashtag);
-  
             if (hashtagIdRequest.rowCount > 0) {
               hashtagId = hashtagIdRequest.rows[0].id;
             } else {
@@ -151,10 +150,10 @@ export async function updatePost(req, res) {
               hashtagId = hashtagCreated.rows[0].id;
             }
             await createPostHashtagDB(id, hashtagId);
-            await deletePostHashtagDB(id, hashtagId);
+            
           })
         }
-      }
+      
       res.sendStatus(201);
   } catch (err) {
       res.status(500).send(err.message);
