@@ -11,7 +11,7 @@ export async function getHashtags() {
   );
 }
 
-export async function getPostsByHashtagDB(hashtag) {
+export async function getPostsByHashtagDB(hashtag, limit) {
   return db.query(
     `SELECT 
     posts.*,
@@ -41,7 +41,8 @@ export async function getPostsByHashtagDB(hashtag) {
     WHERE hashtag.hashtag = $1
     GROUP BY posts.id, users.name, users.picture, hashtag.hashtag
     ORDER BY posts.id DESC
-    LIMIT 20;`,
-    [hashtag]
+    LIMIT 10
+    OFFSET $2;`,
+    [hashtag, limit]
   );
 }

@@ -5,6 +5,6 @@ import { validateToken } from "../middlewares/auth.middleware.js";
 const tagRouter = Router();
 
 tagRouter.get("/trending", validateToken, getTrending);
-tagRouter.get("/hashtag/:hashtag", validateToken, getPostsByHashtag);
+tagRouter.get("/hashtag/:hashtag/:limit", validateToken, getPostsByHashtag);
 
 export default tagRouter;

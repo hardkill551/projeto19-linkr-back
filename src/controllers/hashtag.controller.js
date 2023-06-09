@@ -10,9 +10,9 @@ export async function getTrending(req, res) {
 }
 
 export async function getPostsByHashtag(req, res) {
-  const { hashtag } = req.params;
+  const { hashtag, limit } = req.params;
   try {
-    const posts = await getPostsByHashtagDB(hashtag);
+    const posts = await getPostsByHashtagDB(hashtag, limit);
     res.send(posts.rows);
   } catch (err) {
     res.status(500).send(err.message);

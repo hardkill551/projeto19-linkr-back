@@ -7,9 +7,9 @@ import { likesSchema } from "../schemas/likes.schemas.js";
 
 const postsRouter = Router();
 
-postsRouter.get("/posts",validateToken, getPosts);
+postsRouter.get("/posts/:limit",validateToken, getPosts);
 postsRouter.post("/posts", validateToken, validateSchema(postSchema), createPost);
-postsRouter.get("/posts/:id",validateToken, getUserPost);
+postsRouter.get("/posts/:id/:limit",validateToken, getUserPost);
 postsRouter.delete("/posts", validateSchema(likesSchema), validateToken, deletePost);
 postsRouter.put("/posts", validateSchema(updateSchema), validateToken, updatePost);
 

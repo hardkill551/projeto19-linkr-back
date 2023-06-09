@@ -1,6 +1,6 @@
 import { db } from "../database/database.connection.js";
 
-export function getAllPostsDB(stalkerId) {
+export function getAllPostsDB(stalkerId, loadCount) {
     return db.query(`SELECT 
     posts.*,
     users.name,
@@ -30,7 +30,9 @@ export function getAllPostsDB(stalkerId) {
             WHERE stalker = $1
         )
     GROUP BY posts.id, users.name, users.picture
-    ORDER BY posts.id DESC`, [stalkerId]);
+    ORDER BY posts.id DESC
+    LIMIT 10
+    OFFSET $2`, [stalkerId, loadCount]);
 }
 
 export function createPostDB(link, message, userId, linkTitle, linkImage, linkDescription) {
@@ -57,7 +59,7 @@ export function deletePostHashtagDB(postId) {
     return db.query(`DELETE FROM 
     "postHashtag" WHERE "postId" = $1`, [postId]);
 }
-export function getUserPostDB(id) {
+export function getUserPostDB(id, limit) {
     return db.query(
         `SELECT posts.*, users.name, users.picture,
       COUNT(DISTINCT likes.id) AS like_count,
@@ -81,10 +83,11 @@ export function getUserPostDB(id) {
     WHERE users.id = $1
     GROUP BY posts.id, users.id
     ORDER BY posts.id DESC
-    LIMIT 20;
+    LIMIT 10
+    OFFSET $2;
   
   `,
-        [id]
+        [id, limit]
     );
 }
 
@@ -94,6 +97,8 @@ export function sameUserPost(userId, postId) {
 export async function deletePosts(postId) {
     await db.query(`DELETE FROM 
     "postHashtag" WHERE "postId" = $1`, [postId]);
+    await db.query(`DELETE FROM 
+    "comments" WHERE "postId" = $1`, [postId]);
     await db.query(`DELETE FROM 
     "likes" WHERE "postId" = $1`, [postId]);
     return db.query(`DELETE FROM 

@@ -2,17 +2,17 @@ import { createPostDB, createPostHashtagDB, getAllPostsDB, getUserPostDB, getIdH
 import urlMetadata from "url-metadata";
 
 export async function getPosts(req, res) {
+  const {limit} = req.params
+  
   try {
     const { userId } = res.locals;
-    
-    const posts = await getAllPostsDB(userId);
+    const posts = await getAllPostsDB(userId, limit);
     res.send(posts.rows);
   } catch (err) {
     console.log(err)
     res.status(500).send(err.message);
   }
 }
-
 export async function createPost(req, res) {
   const { link, message } = req.body;
   const { userId } = res.locals
@@ -67,8 +67,9 @@ export async function createPost(req, res) {
 
 export async function getUserPost(req, res) {
   const { id } = req.params;
+  const {limit} = req.params
   try {
-    const result = await getUserPostDB(id);
+    const result = await getUserPostDB(id, limit);
 
     if (result.rows.length === 0 || result.rows[0].id === null) {
       const response = {
