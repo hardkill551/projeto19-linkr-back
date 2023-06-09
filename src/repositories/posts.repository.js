@@ -54,10 +54,9 @@ export function createHashtagDB(hashtag) {
 export function createPostHashtagDB(postId, hashtagId) {
     return db.query(`INSERT INTO "postHashtag" ("postId", "hashtagId") VALUES ($1, $2);`, [postId, hashtagId]);
 }
-export async function deletePostHashtagDB(postId, hashtagId) {
-    await db.query(`DELETE FROM 
+export function deletePostHashtagDB(postId) {
+    return db.query(`DELETE FROM 
     "postHashtag" WHERE "postId" = $1`, [postId]);
-    return db.query(`INSERT INTO "postHashtag" ("postId", "hashtagId") VALUES ($1, $2);`, [postId, hashtagId]);
 }
 export function getUserPostDB(id) {
     return db.query(
