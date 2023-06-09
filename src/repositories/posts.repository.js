@@ -1,6 +1,6 @@
 import { db } from "../database/database.connection.js";
 
-export function getAllPostsDB(stalkerId, ) {
+export function getAllPostsDB(stalkerId) {
     return db.query(`SELECT 
     posts.*,
     users.name,
