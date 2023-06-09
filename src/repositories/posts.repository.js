@@ -1,6 +1,6 @@
 import { db } from "../database/database.connection.js";
 
-export function getAllPostsDB(stalkerId) {
+export function getAllPostsDB(stalkerId, ) {
     return db.query(`SELECT 
     posts.*,
     users.name,
@@ -30,8 +30,7 @@ export function getAllPostsDB(stalkerId) {
             WHERE stalker = $1
         )
     GROUP BY posts.id, users.name, users.picture
-    ORDER BY posts.id DESC
-    LIMIT 20;`, [stalkerId]);
+    ORDER BY posts.id DESC`, [stalkerId]);
 }
 
 export function createPostDB(link, message, userId, linkTitle, linkImage, linkDescription) {
