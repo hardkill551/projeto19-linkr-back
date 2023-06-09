@@ -9,7 +9,7 @@ const likesRouter = Router();
 
 likesRouter.post("/likes", validateSchema(likesSchema), validateToken, postLikes);
 likesRouter.delete("/likes", validateSchema(likesSchema), validateToken, deleteLike);
-likesRouter.post("/likesCheck", validateSchema(likesSchema), validateToken, checkPost);
+likesRouter.post("/likesCheck", validateSchema(likesSchema), checkPost);
 likesRouter.get("/likes/:id", whoLike);
 
 export default likesRouter;
