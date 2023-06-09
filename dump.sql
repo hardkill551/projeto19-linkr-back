@@ -181,7 +181,7 @@ ALTER SEQUENCE public."postHashtag_id_seq" OWNED BY public."postHashtag".id;
 
 CREATE TABLE public.posts (
     id integer NOT NULL,
-    "originalId" integer NOT NULL,
+    "originalId" integer,
     repost boolean DEFAULT false NOT NULL,
     link text NOT NULL,
     message character varying,
@@ -342,12 +342,14 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 -- Data for Name: following; Type: TABLE DATA; Schema: public; Owner: -
 --
 
+INSERT INTO public.following VALUES (1, 2, 1);
 
 
 --
 -- Data for Name: hashtag; Type: TABLE DATA; Schema: public; Owner: -
 --
 
+INSERT INTO public.hashtag VALUES (1, 'er');
 
 
 --
@@ -360,24 +362,46 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 -- Data for Name: postHashtag; Type: TABLE DATA; Schema: public; Owner: -
 --
 
+INSERT INTO public."postHashtag" VALUES (1, 4, 1);
 
 
 --
 -- Data for Name: posts; Type: TABLE DATA; Schema: public; Owner: -
 --
 
+INSERT INTO public.posts VALUES (1, NULL, false, 'https://github.com/hardkill551/projeto19-linkr-back/pull/42', 'fasafasfsaf', 1, 'feat/infiniteScroll by hardkill551 · Pull Request #42 · hardkill551/projeto19-linkr-back', 'https://opengraph.githubassets.com/4787e716982e588843f90343a2328d2bdc526550980fd7fbbdac890f89467270/hardkill551/projeto19-linkr-back/pull/42', 'Contribute to hardkill551/projeto19-linkr-back development by creating an account on GitHub.');
+INSERT INTO public.posts VALUES (2, NULL, false, 'https://github.com/hardkill551/projeto19-linkr-back/pull/42', 'asdfafsafsa', 1, 'feat/infiniteScroll by hardkill551 · Pull Request #42 · hardkill551/projeto19-linkr-back', 'https://opengraph.githubassets.com/4787e716982e588843f90343a2328d2bdc526550980fd7fbbdac890f89467270/hardkill551/projeto19-linkr-back/pull/42', 'Contribute to hardkill551/projeto19-linkr-back development by creating an account on GitHub.');
+INSERT INTO public.posts VALUES (3, NULL, false, 'https://github.com/hardkill551/projeto19-linkr-back/pull/42', 'sfdasfsa', 1, 'feat/infiniteScroll by hardkill551 · Pull Request #42 · hardkill551/projeto19-linkr-back', 'https://opengraph.githubassets.com/4787e716982e588843f90343a2328d2bdc526550980fd7fbbdac890f89467270/hardkill551/projeto19-linkr-back/pull/42', 'Contribute to hardkill551/projeto19-linkr-back development by creating an account on GitHub.');
+INSERT INTO public.posts VALUES (4, NULL, false, 'https://github.com/hardkill551/projeto19-linkr-back/pull/42', 'safdsaf #er', 1, 'feat/infiniteScroll by hardkill551 · Pull Request #42 · hardkill551/projeto19-linkr-back', 'https://opengraph.githubassets.com/4787e716982e588843f90343a2328d2bdc526550980fd7fbbdac890f89467270/hardkill551/projeto19-linkr-back/pull/42', 'Contribute to hardkill551/projeto19-linkr-back development by creating an account on GitHub.');
+INSERT INTO public.posts VALUES (5, NULL, false, 'https://github.com/hardkill551/projeto19-linkr-back/pull/42', 'adasdasda', 1, 'feat/infiniteScroll by hardkill551 · Pull Request #42 · hardkill551/projeto19-linkr-back', 'https://opengraph.githubassets.com/4787e716982e588843f90343a2328d2bdc526550980fd7fbbdac890f89467270/hardkill551/projeto19-linkr-back/pull/42', 'Contribute to hardkill551/projeto19-linkr-back development by creating an account on GitHub.');
+INSERT INTO public.posts VALUES (6, NULL, false, 'https://github.com/hardkill551/projeto19-linkr-back/pull/42', 'sdfafsaf', 1, 'feat/infiniteScroll by hardkill551 · Pull Request #42 · hardkill551/projeto19-linkr-back', 'https://opengraph.githubassets.com/4787e716982e588843f90343a2328d2bdc526550980fd7fbbdac890f89467270/hardkill551/projeto19-linkr-back/pull/42', 'Contribute to hardkill551/projeto19-linkr-back development by creating an account on GitHub.');
+INSERT INTO public.posts VALUES (7, NULL, false, 'https://github.com/hardkill551/projeto19-linkr-back/pull/42', 'sfafsafsa', 1, 'feat/infiniteScroll by hardkill551 · Pull Request #42 · hardkill551/projeto19-linkr-back', 'https://opengraph.githubassets.com/4787e716982e588843f90343a2328d2bdc526550980fd7fbbdac890f89467270/hardkill551/projeto19-linkr-back/pull/42', 'Contribute to hardkill551/projeto19-linkr-back development by creating an account on GitHub.');
+INSERT INTO public.posts VALUES (8, NULL, false, 'https://github.com/hardkill551/projeto19-linkr-back/pull/42', 'wafsafsfas', 1, 'feat/infiniteScroll by hardkill551 · Pull Request #42 · hardkill551/projeto19-linkr-back', 'https://opengraph.githubassets.com/4787e716982e588843f90343a2328d2bdc526550980fd7fbbdac890f89467270/hardkill551/projeto19-linkr-back/pull/42', 'Contribute to hardkill551/projeto19-linkr-back development by creating an account on GitHub.');
+INSERT INTO public.posts VALUES (9, NULL, false, 'https://github.com/hardkill551/projeto19-linkr-back/pull/42', 'safsafsadfsda', 1, 'feat/infiniteScroll by hardkill551 · Pull Request #42 · hardkill551/projeto19-linkr-back', 'https://opengraph.githubassets.com/4787e716982e588843f90343a2328d2bdc526550980fd7fbbdac890f89467270/hardkill551/projeto19-linkr-back/pull/42', 'Contribute to hardkill551/projeto19-linkr-back development by creating an account on GitHub.');
+INSERT INTO public.posts VALUES (10, NULL, false, 'https://github.com/hardkill551/projeto19-linkr-back/pull/42', 'safasfasf', 1, 'feat/infiniteScroll by hardkill551 · Pull Request #42 · hardkill551/projeto19-linkr-back', 'https://opengraph.githubassets.com/4787e716982e588843f90343a2328d2bdc526550980fd7fbbdac890f89467270/hardkill551/projeto19-linkr-back/pull/42', 'Contribute to hardkill551/projeto19-linkr-back development by creating an account on GitHub.');
+INSERT INTO public.posts VALUES (11, NULL, false, 'https://github.com/hardkill551/projeto19-linkr-back/pull/42', 'afasfdsa', 1, 'feat/infiniteScroll by hardkill551 · Pull Request #42 · hardkill551/projeto19-linkr-back', 'https://opengraph.githubassets.com/4787e716982e588843f90343a2328d2bdc526550980fd7fbbdac890f89467270/hardkill551/projeto19-linkr-back/pull/42', 'Contribute to hardkill551/projeto19-linkr-back development by creating an account on GitHub.');
+INSERT INTO public.posts VALUES (12, NULL, false, 'https://github.com/hardkill551/projeto19-linkr-back/pull/42', 'sfasfasf', 1, 'feat/infiniteScroll by hardkill551 · Pull Request #42 · hardkill551/projeto19-linkr-back', 'https://opengraph.githubassets.com/4787e716982e588843f90343a2328d2bdc526550980fd7fbbdac890f89467270/hardkill551/projeto19-linkr-back/pull/42', 'Contribute to hardkill551/projeto19-linkr-back development by creating an account on GitHub.');
+INSERT INTO public.posts VALUES (13, NULL, false, 'https://github.com/hardkill551/projeto19-linkr-back/pull/42', 'sdfafsd', 1, 'feat/infiniteScroll by hardkill551 · Pull Request #42 · hardkill551/projeto19-linkr-back', 'https://opengraph.githubassets.com/4787e716982e588843f90343a2328d2bdc526550980fd7fbbdac890f89467270/hardkill551/projeto19-linkr-back/pull/42', 'Contribute to hardkill551/projeto19-linkr-back development by creating an account on GitHub.');
+INSERT INTO public.posts VALUES (14, NULL, false, 'https://github.com/hardkill551/projeto19-linkr-back/pull/42', 'sfasfsaf', 1, 'feat/infiniteScroll by hardkill551 · Pull Request #42 · hardkill551/projeto19-linkr-back', 'https://opengraph.githubassets.com/4787e716982e588843f90343a2328d2bdc526550980fd7fbbdac890f89467270/hardkill551/projeto19-linkr-back/pull/42', 'Contribute to hardkill551/projeto19-linkr-back development by creating an account on GitHub.');
+INSERT INTO public.posts VALUES (15, NULL, false, 'https://github.com/hardkill551/projeto19-linkr-back/pull/42', 'dsafasfs', 2, 'feat/infiniteScroll by hardkill551 · Pull Request #42 · hardkill551/projeto19-linkr-back', 'https://opengraph.githubassets.com/4787e716982e588843f90343a2328d2bdc526550980fd7fbbdac890f89467270/hardkill551/projeto19-linkr-back/pull/42', 'Contribute to hardkill551/projeto19-linkr-back development by creating an account on GitHub.');
+INSERT INTO public.posts VALUES (17, NULL, false, 'https://github.com/hardkill551/projeto19-linkr-back/pull/42', 'sfasfsaf', 1, 'feat/infiniteScroll by hardkill551 · Pull Request #42 · hardkill551/projeto19-linkr-back', 'https://opengraph.githubassets.com/4787e716982e588843f90343a2328d2bdc526550980fd7fbbdac890f89467270/hardkill551/projeto19-linkr-back/pull/42', 'Contribute to hardkill551/projeto19-linkr-back development by creating an account on GitHub.');
 
 
 --
 -- Data for Name: sessions; Type: TABLE DATA; Schema: public; Owner: -
 --
 
+INSERT INTO public.sessions VALUES (1, 1, 'eyJhbGciOiJIUzI1NiJ9.MQ.fOKNCkrocbiKInqrPCqjekAn7O9oZ61tMMzKE8RftBk');
+INSERT INTO public.sessions VALUES (2, 2, 'eyJhbGciOiJIUzI1NiJ9.Mg.7VV4H4jNY2w4YcopjJLX-4Cf4KvIhGum-CVXdOCrBRM');
+INSERT INTO public.sessions VALUES (3, 1, 'eyJhbGciOiJIUzI1NiJ9.MQ.fOKNCkrocbiKInqrPCqjekAn7O9oZ61tMMzKE8RftBk');
 
 
 --
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: -
 --
 
+INSERT INTO public.users VALUES (1, 'Hugo', 'hard@hard.com', '$2b$10$GPzN/2xm2XOTHY6FBd.hs.UkwZr32FGhVyB3Idnp6d9w4u4QR4TVu', 'http://localhost:3000/sign-up');
+INSERT INTO public.users VALUES (2, 'Hugão', 'hard@gmail.com', '$2b$10$.mAGwxiQr/cDBFWDto.4r.uL33Kj/QyRwqBSoUQATQw2mBXb6xenm', 'https://github.com/hardkill551/projeto19-linkr-back/pull/42');
 
 
 --
@@ -391,14 +415,14 @@ SELECT pg_catalog.setval('public.comments_id_seq', 1, false);
 -- Name: following_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.following_id_seq', 1, false);
+SELECT pg_catalog.setval('public.following_id_seq', 1, true);
 
 
 --
 -- Name: hashtag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.hashtag_id_seq', 1, false);
+SELECT pg_catalog.setval('public.hashtag_id_seq', 1, true);
 
 
 --
@@ -412,28 +436,28 @@ SELECT pg_catalog.setval('public.likes_id_seq', 1, false);
 -- Name: postHashtag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."postHashtag_id_seq"', 1, false);
+SELECT pg_catalog.setval('public."postHashtag_id_seq"', 1, true);
 
 
 --
 -- Name: posts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.posts_id_seq', 1, false);
+SELECT pg_catalog.setval('public.posts_id_seq', 17, true);
 
 
 --
 -- Name: sessions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.sessions_id_seq', 1, false);
+SELECT pg_catalog.setval('public.sessions_id_seq', 3, true);
 
 
 --
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.users_id_seq', 1, false);
+SELECT pg_catalog.setval('public.users_id_seq', 2, true);
 
 
 --
