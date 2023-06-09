@@ -27,9 +27,9 @@ export async function deleteLike(req, res) {
 }
 
 export async function checkPost(req, res) {
-    const {postId, userId} = req.body
+    const {postId} = req.body
     try {
-        const userLike = await sameUser(userId, postId)
+        const userLike = await sameUser(res.locals.userId, postId)
         if (userLike.rowCount === 0) return res.status(200).send(false)
         res.sendStatus(201);
     } catch (err) {
